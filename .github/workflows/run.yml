@@ -1,0 +1,49 @@
+name: Update
+
+on:
+  watch:
+    types: [started]
+  schedule:
+    - cron: "45 * * * *"
+   
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps: 
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Configure Origin
+      uses: Boostport/setup-cloudflare-warp@v1
+      with: 
+        organization: ${{ secrets.CLOUDFLARE_ORGANIZATION }}
+        auth_client_id: ${{ secrets.CLOUDFLARE_AUTH_CLIENT_ID }}
+        auth_client_secret: ${{ secrets.CLOUDFLARE_AUTH_CLIENT_SECRET }}
+
+    - name: Add customs from secret
+      run: |
+        echo "${{ secrets.CUSTOM_HOSTS }}" | sudo tee -a /etc/hosts
+
+    - name: Set custom DNS
+      run: |
+        echo "nameserver 52.80.66.66" | sudo tee /etc/resolv.conf > /dev/null
+        echo "nameserver 117.50.22.22" | sudo tee -a /etc/resolv.conf > /dev/null
+        cat /etc/resolv.conf
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.12
+
+    - name: Install dependencies
+      run: |
+        pip install httpx uvloop
+    
+    - name: Build
+      run: |
+        cp ${{ github.workspace }}/run/run.py ${{ github.workspace }}/updater.py
+        echo "${{ secrets.API }}" > api.txt
+        sed -i '9 r api.txt' ${{ github.workspace }}/updater.py
+        python ${{ github.workspace }}/updater.py
+    

@@ -40,11 +40,11 @@ jobs:
       run: |
         pip install selenium requests undetected-chromedriver
 
-- name: Install Chrome and ChromeDriver
-  uses: browser-actions/setup-chrome@v1
-  with:
-    chrome-version: 135
-    chromedriver-version: 135
+    - name: Install Chrome and ChromeDriver
+      uses: browser-actions/setup-chrome@v1
+      with:
+        chrome-version: 135
+        chromedriver-version: 135
     
     - name: Build
       run: |

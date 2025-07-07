@@ -2,7 +2,7 @@ name: Update
 
 on:
   watch:
-    types: [started]
+    typesi: [started]
   schedule:
     - cron: "45 * * * *"
    

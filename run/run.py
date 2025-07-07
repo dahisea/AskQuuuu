@@ -65,7 +65,7 @@ async def worker(client, queue, stats, method, no_response):
         queue.task_done()
 
 async def main():
-    total_downloads = 1000000
+    total_downloads = 100000
     num_concurrent_requests = 2000
     download_method = random.choice(["GET", "POST", "PUT", "HEAD"])
     no_response_needed = True

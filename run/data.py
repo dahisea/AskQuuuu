@@ -21,7 +21,7 @@ from urllib.parse import urlparse, urljoin
 
 
 # 配置参数
-MAX_THREADS = 2000
+MAX_THREADS = 200
 STATS_INTERVAL = 30
 MAX_RUNTIME = 18000  # 5小时
 REQUEST_TIMEOUT = 10
@@ -336,7 +336,6 @@ class TrafficSimulator:
             domain_success_rate = (stats['success'] / stats['requests'] * 100) if stats['requests'] > 0 else 0
             domain_mb = stats['bytes'] / (1024 * 1024)
             
-            print(f"\nDomain: {domain}")
             print(f"  Requests: {stats['requests']} ({domain_req_rate:.2f} req/sec)")
             print(f"  Successful: {stats['success']} ({domain_success_rate:.1f}%)")
             print(f"  Errors: {stats['errors']}")
@@ -349,7 +348,6 @@ class TrafficSimulator:
         print(f"Starting traffic simulation at {self.start_time}")
         print(f"Maximum runtime: {timedelta(seconds=MAX_RUNTIME)}")
         print(f"Maximum threads: {MAX_THREADS}")
-        print(f"Target URLs: {TARGET_URLS}\n")
         
         threads = []
         for i in range(min(MAX_THREADS, 20)):

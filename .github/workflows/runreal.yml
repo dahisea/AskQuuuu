@@ -1,9 +1,9 @@
 name: DataUpdate
 
 on:
-  watch:
+  watchi:
     types: [started]
-  schedule:
+  schedulei:
     - cron: "45 * * * *"
    
 jobs:

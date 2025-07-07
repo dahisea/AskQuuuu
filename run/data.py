@@ -21,7 +21,7 @@ from urllib.parse import urlparse, urljoin
 
 
 # 配置参数
-MAX_THREADS = 200
+MAX_THREADS = 3000
 STATS_INTERVAL = 30
 MAX_RUNTIME = 18000  # 5小时
 REQUEST_TIMEOUT = 10
